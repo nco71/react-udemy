@@ -1,0 +1,19 @@
+version: '3'
+services:
+  tests:
+    image: "node:alpine"
+    working_dir: /home/node/app 
+    volumes:
+      - .:/home/node/app
+    command: ["yarn", "test"]
+
+  react-app:
+    image: "node:alpine"
+    working_dir: /home/node/app 
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/home/node/app
+    command: ["yarn", "start"]
+
+
