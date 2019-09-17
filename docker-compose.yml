@@ -15,5 +15,3 @@ services:
     volumes:
       - .:/home/node/app
     command: ["yarn", "start"]
-
-
