@@ -2,9 +2,11 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "homepage":"https://nco71.github.io/react-udemy/",
+  "homepage": "https://nco71.github.io/react-udemy/",
   "dependencies": {
+    "firebase": "^7.8.2",
     "node-sass": "^4.12.0",
+    "prettier": "^1.19.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-scripts": "3.1.1"
