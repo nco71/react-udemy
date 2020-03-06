@@ -7,10 +7,11 @@
     "node-sass": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "react-redux": "^7.2.0",
+    "react-redux": "latest",
     "react-router-dom": "latest",
-    "redux": "^4.0.5",
-    "redux-logger": "^3.0.6"
+    "redux": "latest",
+    "redux-logger": "latest",
+    "reselect": "latest"
   },
   "devDependencies": {
     "react-scripts": "latest"
