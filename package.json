@@ -11,6 +11,7 @@
     "react-router-dom": "latest",
     "redux": "latest",
     "redux-logger": "latest",
+    "redux-persist": "^6.0.0",
     "reselect": "latest"
   },
   "devDependencies": {
