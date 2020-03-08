@@ -9,6 +9,7 @@
     "react-dom": "latest",
     "react-redux": "latest",
     "react-router-dom": "latest",
+    "react-stripe-checkout": "^2.6.3",
     "redux": "latest",
     "redux-logger": "latest",
     "redux-persist": "^6.0.0",
