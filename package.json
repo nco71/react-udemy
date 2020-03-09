@@ -13,7 +13,8 @@
     "redux": "latest",
     "redux-logger": "latest",
     "redux-persist": "^6.0.0",
-    "reselect": "latest"
+    "reselect": "latest",
+    "styled-components": "^5.0.1"
   },
   "devDependencies": {
     "react-scripts": "latest"
