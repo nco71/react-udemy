@@ -2,10 +2,8 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-const  firebaseKey = process.env.REACT_APP_FIREBASE_KEY; 
-
 export  const firebaseConfig = {
-        apiKey:'AIzaSyDvWnceRnxNUpGeCOAWqdrPoQuvLMIBNWI',
+        apiKey: `{process.env.REACT_APP_FIREBASE_KEY}`,
         authDomain: "react-udemy-2ed62.firebaseapp.com",
         databaseURL: "https://react-udemy-2ed62.firebaseio.com",
         projectId: "react-udemy-2ed62",
