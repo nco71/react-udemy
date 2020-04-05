@@ -2,14 +2,14 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-export  const firebaseConfig = {
-        apiKey: `{process.env.REACT_APP_FIREBASE_KEY}`,
-        authDomain: "react-udemy-2ed62.firebaseapp.com",
-        databaseURL: "https://react-udemy-2ed62.firebaseio.com",
-        projectId: "react-udemy-2ed62",
-        storageBucket: "react-udemy-2ed62.appspot.com",
-        messagingSenderId: "781792002675",
-        appId: "1:781792002675:web:59629076c57f2b560c6006"
+export const firebaseConfig = {
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: "react-udemy-2ed62.firebaseapp.com",
+  databaseURL: "https://react-udemy-2ed62.firebaseio.com",
+  projectId: "react-udemy-2ed62",
+  storageBucket: "react-udemy-2ed62.appspot.com",
+  messagingSenderId: "781792002675",
+  appId: "1:781792002675:web:59629076c57f2b560c6006"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -27,6 +27,40 @@ export const addCollectionAndDocuments = async (
   });
 
   return await batch.commit();
+};
+
+export const addNewCartItemsDocument =  (userId, itemId)  => {
+  //if not add a new item
+  console.log('start adding cartitem');
+  const userDoc = firestore.collection('users').doc(userId);
+  userDoc.collection('cart').doc(`${itemId}`).set({  
+    quantity: 1 
+   })
+  .then(function(docRef) {
+    console.log(docRef.id);
+    return("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.log(error);
+    return("Error adding document: ", error);
+})
+};
+
+export const updateCartItemsDocument =  (userId, itemId, quantity)  => {
+  //if not add a new item
+  console.log('start adding cartitem');
+  const userCart = firestore.collection('users').doc(userId).collection('cart').doc(`${itemId}`);
+  userCart.update({
+     quantity: quantity 
+  })
+  .then(function(docRef) {
+    console.log(docRef.id);
+    return("Document written with ID: ", docRef.id);
+})
+.catch(function(error) {
+    console.log(error);
+    return("Error adding document: ", error);
+})
 };
 
 export const convertCollectionsSnapshotToMap = collections => {
@@ -84,14 +118,11 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     
     } catch (error) {
       console.log('error creating user', error.message);
-    
-    }
-  
+        }
   }
 
   return userRef;
 
 };
-
 
 export default firebase;
