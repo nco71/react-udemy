@@ -19,19 +19,38 @@ export function* onAddItem() {
   yield takeLatest(CartActionTypes.ADD_ITEM,startAddItem)
 }
 
-// export function* onSignInSuccessSyncCart({payload: user}) {
-//   yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS,startSyncCart(user))
-// }
+export function* onRemoveItem() {
+  yield takeLatest(CartActionTypes.REMOVE_ITEM,startRemoveItem)
+}
 
-// export function* startSyncCart(user){
-//   console.log(user);
-//    yield startUpdateSync([]);
-// }
+export function* onClearItemFromCart() {
+  yield takeLatest(CartActionTypes.CLEAR_ITEM_FROM_CART,startClearItemCart)
+}
+
+export function* onSignInSuccessSyncCart() {
+  yield takeLatest(UserActionTypes.SIGN_IN_SUCCESS,startSyncCart)
+}
+
+export function* startSyncCart({payload: user}){
+  console.log(user.cart)
+  yield put(finishUpdateCart(user.cart))
+}
 
 export function* startAddItem( {payload: item} ){
   let cartItems = yield select(selectCartItems);
   let updatedCartItems = updateCartItem(cartItems,item,1);
-  console.log(updatedCartItems);
+   yield startUpdateSync(updatedCartItems);
+  }
+
+export function* startRemoveItem( {payload: item} ){
+  let cartItems = yield select(selectCartItems);
+  let updatedCartItems = updateCartItem(cartItems,item,-1);
+   yield startUpdateSync(updatedCartItems);
+  }
+
+export function* startClearItemCart( {payload: item} ){
+  let cartItems = yield select(selectCartItems);
+  let updatedCartItems = updateCartItem(cartItems,item, -item.quantity);
    yield startUpdateSync(updatedCartItems);
   }
 
@@ -57,7 +76,9 @@ export function* onSignOutSuccess() {
 export function* cartSagas() {
   yield all([
     call(onSignOutSuccess),
-    // call(onSignInSuccessSyncCart),
-    call(onAddItem)
+    call(onSignInSuccessSyncCart),
+    call(onRemoveItem),
+    call(onAddItem),
+    call(onClearItemFromCart)
     ]);
 }

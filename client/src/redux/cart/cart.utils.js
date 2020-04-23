@@ -7,14 +7,10 @@ export const updateCartItem = (cartItems, cartItemToUpdate, quantity) => {
   );
 
   if (existingCartItem) {
-    if (existingCartItem.quantity + quantity === 0) {
-      return cartItems.map(cartItem =>
-        cartItem.id === cartItemToUpdate.id
-          ? { ...cartItem, quantity: cartItem.quantity + quantity }
-          : cartItem
-      );
+    if (existingCartItem.quantity === - quantity) {
+      return cartItems.filter(cartItem=>
+        cartItem.id !== existingCartItem.id)
     }
-
     return cartItems.map(cartItem =>
       cartItem.id === cartItemToUpdate.id
         ? { ...cartItem, quantity: cartItem.quantity + quantity }
