@@ -7,6 +7,7 @@ import CartItem from '../cart-item/cart-item.component';
 import { selectCartItems } from '../../redux/cart/cart.selectors';
 import { toggleCartHidden } from '../../redux/cart/cart.actions.js';
 
+
 import {
   CartDropdownContainer,
   CartDropdownButton,
@@ -14,7 +15,7 @@ import {
   CartItemsContainer
 } from './cart-dropdown.styles';
 
-const CartDropdown = ({ cartItems, history, dispatch }) => (
+const CartDropdown = ({ cartItems,  history, dispatch }) => (
   <CartDropdownContainer>
     <CartItemsContainer>
       {cartItems.length ? (

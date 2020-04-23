@@ -29,33 +29,15 @@ export const addCollectionAndDocuments = async (
   return await batch.commit();
 };
 
-export const addNewCartItemsDocument =  (userId, itemId)  => {
-  //if not add a new item
-  console.log('start adding cartitem');
-  const userDoc = firestore.collection('users').doc(userId);
-  userDoc.collection('cart').doc(`${itemId}`).set({  
-    quantity: 1 
-   })
-  .then(function(docRef) {
-    console.log(docRef.id);
-    return("Document written with ID: ", docRef.id);
-})
-.catch(function(error) {
-    console.log(error);
-    return("Error adding document: ", error);
-})
-};
-
-export const updateCartItemsDocument =  (userId, itemId, quantity)  => {
-  //if not add a new item
-  console.log('start adding cartitem');
-  const userCart = firestore.collection('users').doc(userId).collection('cart').doc(`${itemId}`);
+export const updateCartItemsDocument =  (userId, cartItems)  => {
+  console.log('start adding cartitem to firebase');
+  console.log(userId, cartItems);
+  const userCart = firestore.collection('users').doc(userId);
   userCart.update({
-     quantity: quantity 
+     cart: cartItems 
   })
-  .then(function(docRef) {
-    console.log(docRef.id);
-    return("Document written with ID: ", docRef.id);
+  .then(function(userCart) {
+    return("Document written with ID: ", userCart);
 })
 .catch(function(error) {
     console.log(error);
@@ -107,10 +89,12 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!snapShot.exists) {
     const { displayName, email  } = userAuth;
     const createdAt = new Date();
+    const cart=[];
     try {
       await userRef.set({
         displayName,
         email,
+        cart,
         createdAt,
         ...additionalData
       

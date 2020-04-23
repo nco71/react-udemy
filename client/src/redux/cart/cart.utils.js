@@ -1,60 +1,25 @@
-import  { updateCartItemsDocument, addNewCartItemsDocument } from '../../firebase/firebase.utils'
-import {selectCurrentUser} from '../user/user.selectors';
+export const updateCartItem = (cartItems, cartItemToUpdate, quantity) => {
 
-export const addItemToCart = (cartItems, cartItemToAdd ) => {
+ console.log("updating cart items");
+ console.log(cartItems,cartItemToUpdate,quantity);
   const existingCartItem = cartItems.find(
-    cartItem => cartItem.id ===cartItemToAdd.id
+    cartItem => cartItem.id === cartItemToUpdate.id
   );
+
   if (existingCartItem) {
+    if (existingCartItem.quantity + quantity === 0) {
+      return cartItems.map(cartItem =>
+        cartItem.id === cartItemToUpdate.id
+          ? { ...cartItem, quantity: cartItem.quantity + quantity }
+          : cartItem
+      );
+    }
 
-  let originalCartItem = cartItems.filter(cartItem => 
-    cartItem.id === cartItemToAdd.id 
-  )
-
-    let updatedCart = cartItems.map(cartItem =>
-      cartItem.id === cartItemToAdd.id
-        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+    return cartItems.map(cartItem =>
+      cartItem.id === cartItemToUpdate.id
+        ? { ...cartItem, quantity: cartItem.quantity + quantity }
         : cartItem
     );
-    
-    if(selectCurrentUser)
-     {
-      try {
-        updateCartItemsDocument(selectCurrentUser.id, cartItemToAdd.id, originalCartItem.quantity + 1 )
-      }
-      catch(error) {
-        alert(error.alert)
-        return cartItems;
-      }
-    }; 
-
-    return updatedCart;
   }
-  
-  if (  selectCurrentUser )  {
-    try {
-    addNewCartItemsDocument(selectCurrentUser.id, cartItemToAdd.id, 1); 
-    }
-    catch (error) {
-        alert(error.alert)
-        return cartItems;
-      }
-  }
-  return [...cartItems, { ...cartItemToAdd, quantity: 1 }];
-};
-
-export const removeItemFromCart = (cartItems, cartItemToRemove) => {
-  const existingCartItem = cartItems.find(
-    cartItem => cartItem.id === cartItemToRemove.id
-  );
-
-  if (existingCartItem.quantity === 1) {
-    return cartItems.filter(cartItem => cartItem.id !== cartItemToRemove.id);
-  }
-
-  return cartItems.map(cartItem =>
-    cartItem.id === cartItemToRemove.id
-      ? { ...cartItem, quantity: cartItem.quantity - 1 }
-      : cartItem
-  );
+  return [...cartItems, { ...cartItemToUpdate, quantity: 1 }];
 };
